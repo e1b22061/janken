@@ -11,7 +11,15 @@
   <h1>じゃんけんゲーム</h1>
   <p>
   <div th:if="${name}">Hi, [[${name}]]</div>
+  <a href="/janken?playerHand=r">グー</a>
+  <a href="/janken?playerHand=s">チョキ</a>
+  <a href="/janken?playerHand=p">パー</a>
   </p>
+  <div th:if="${result}">
+    あなたの手 [[${playerHand}]]<br />
+    CPUの手 [[${cpuHand}]]<br />
+    結果 [[${result}]]
+  </div>
 </body>
 
 </html>
