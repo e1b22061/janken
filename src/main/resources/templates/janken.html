@@ -15,7 +15,7 @@
   <a href="/janken?playerHand=s">チョキ</a>
   <a href="/janken?playerHand=p">パー</a>
   </p>
-  <div th:if="${result}">
+  <div th:if="${result != null}">
     あなたの手 [[${playerHand}]]<br />
     CPUの手 [[${cpuHand}]]<br />
     結果 [[${result}]]

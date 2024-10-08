@@ -18,7 +18,7 @@ public class JankenController {
   }
 
   @GetMapping("/janken")
-  public String playJanken(@RequestParam String playerHand, ModelMap model) {
+  public String playJanken(@RequestParam(value = "playerHand", required = false) String playerHand, ModelMap model) {
     Janken janken = new Janken();
     Map<String, String> outcome = janken.judge(playerHand);
 
