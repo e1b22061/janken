@@ -1,6 +1,7 @@
 package oit.is.z2620.kaizi.janken.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,12 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 import oit.is.z2620.kaizi.janken.model.Janken;
-import oit.is.z2620.kaizi.janken.model.Entry;
+import oit.is.z2620.kaizi.janken.model.User;
+import oit.is.z2620.kaizi.janken.model.UserMapper;
 
 @Controller
 public class JankenController {
   @Autowired
-  private Entry entry;
+  private UserMapper um;
 
   @PostMapping("/janken")
   public String janken(@RequestParam String name, ModelMap model) {
@@ -28,9 +30,15 @@ public class JankenController {
   public String playJanken(@RequestParam(value = "playerHand", required = false) String playerHand, Principal prin,
       ModelMap model) {
     String loginUser = prin.getName();
-    this.entry.addEntry(loginUser);
-    model.addAttribute("name", loginUser);
-    model.addAttribute("entry", this.entry);
+    User newUser = new User();
+    newUser.setName(loginUser);
+    try {
+      this.um.insertUser(newUser);
+    } catch (RuntimeException e) {
+      System.out.println("Exception:" + e.getMessage());
+    }
+    ArrayList<User> users = this.um.selectAllUser();
+    model.addAttribute("users", users);
 
     Janken janken = new Janken();
     Map<String, String> outcome = janken.judge(playerHand);

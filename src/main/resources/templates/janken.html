@@ -10,10 +10,10 @@
 <body>
   <a href="/logout">ログアウト</a>
   <h1>じゃんけんゲーム</h1>
-  <div th:if="${entry}">
+  <div th:if="${users}">
     エントリー
     <ul>
-      <li th:each="user : ${entry.entries}">[[${user}]]</li>
+      <li th:each="user:${users}">[[${user.name}]]</li>
     </ul>
   </div>
   <p>
