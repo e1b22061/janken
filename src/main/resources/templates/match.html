@@ -12,13 +12,13 @@
   <h1>Match</h1>
   <h2>[[${player}]] V.S. [[${opponent}]]</h2>
   <p>
-    <a href="/match?playerHand=r">グー</a>
-    <a href="/match?playerHand=s">チョキ</a>
-    <a href="/match?playerHand=p">パー</a>
+    <a th:href="@{/fight(id=${opponentId},hand=Gu)}">グー</a>
+    <a th:href="@{/fight(id=${opponentId},hand=Choki)}">チョキ</a>
+    <a th:href="@{/fight(id=${opponentId},hand=Pa)}">パー</a>
   </p>
   <div th:if="${result}">
-    あなたの手 [[${playerHand}]]<br />
-    相手の手 [[${cpuHand}]]<br />
+    [[${player}]]の手 [[${playerHand}]]<br />
+    [[${opponent}]]の手 [[${cpuHand}]]<br />
     結果 [[${result}]]
   </div>
   <a href="/janken">もどる</a>
