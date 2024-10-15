@@ -14,11 +14,15 @@ import java.util.Map;
 import oit.is.z2620.kaizi.janken.model.Janken;
 import oit.is.z2620.kaizi.janken.model.User;
 import oit.is.z2620.kaizi.janken.model.UserMapper;
+import oit.is.z2620.kaizi.janken.model.Match;
+import oit.is.z2620.kaizi.janken.model.MatchMapper;
 
 @Controller
 public class JankenController {
   @Autowired
   private UserMapper um;
+  @Autowired
+  private MatchMapper mm;
 
   @PostMapping("/janken")
   public String janken(@RequestParam String name, ModelMap model) {
@@ -39,6 +43,8 @@ public class JankenController {
     }
     ArrayList<User> users = this.um.selectAllUser();
     model.addAttribute("users", users);
+    ArrayList<Match> matches = this.mm.selectAllMatch();
+    model.addAttribute("matches", matches);
 
     Janken janken = new Janken();
     Map<String, String> outcome = janken.judge(playerHand);

@@ -11,7 +11,7 @@
   <a href="/logout">ログアウト</a>
   <h1>じゃんけんゲーム</h1>
   <div th:if="${users}">
-    エントリー
+    <h2>エントリー</h2>
     <ul>
       <li th:each="user:${users}">[[${user.name}]]</li>
     </ul>
@@ -26,6 +26,15 @@
     あなたの手 [[${playerHand}]]<br />
     CPUの手 [[${cpuHand}]]<br />
     結果 [[${result}]]
+  </div>
+  <div th:if="${matches}">
+    <h2>試合結果</h2>
+    <ul>
+      <li th:each="match,stat:${matches}">
+        id:[[${match.id}]] user1:[[${match.user1}]] user2:[[${match.user2}]] user1の手:[[${match.user1Hand}]]
+        user2の手:[[${match.user2Hand}]]
+      </li>
+    </ul>
   </div>
 </body>
 
