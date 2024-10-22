@@ -10,15 +10,15 @@
 <body>
   <a href="/logout">ログアウト</a>
   <h1>Match</h1>
-  <h2>[[${player}]] V.S. [[${opponent}]]</h2>
+  <h2>[[${player.name}]] V.S. [[${opponent.name}]]</h2>
   <p>
-    <a th:href="@{/fight(id=${opponentId},hand=Gu)}">グー</a>
-    <a th:href="@{/fight(id=${opponentId},hand=Choki)}">チョキ</a>
-    <a th:href="@{/fight(id=${opponentId},hand=Pa)}">パー</a>
+    <a th:href="@{/fight(id=${opponent.id},hand=Gu)}">グー</a>
+    <a th:href="@{/fight(id=${opponent.id},hand=Choki)}">チョキ</a>
+    <a th:href="@{/fight(id=${opponent.id},hand=Pa)}">パー</a>
   </p>
   <div th:if="${result}">
-    [[${player}]]の手 [[${playerHand}]]<br />
-    [[${opponent}]]の手 [[${cpuHand}]]<br />
+    [[${player.name}]]の手 [[${playerHand}]]<br />
+    [[${opponent.name}]]の手 [[${cpuHand}]]<br />
     結果 [[${result}]]
   </div>
   <a href="/janken">もどる</a>
