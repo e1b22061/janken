@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 // import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.Map;
-import oit.is.z2620.kaizi.janken.model.Janken;
+// import java.util.Map;
+// import oit.is.z2620.kaizi.janken.model.Janken;
 import oit.is.z2620.kaizi.janken.model.User;
 import oit.is.z2620.kaizi.janken.model.UserMapper;
 import oit.is.z2620.kaizi.janken.model.Match;
+import oit.is.z2620.kaizi.janken.model.MatchInfo;
 import oit.is.z2620.kaizi.janken.model.MatchMapper;
+import oit.is.z2620.kaizi.janken.model.MatchInfoMapper;
 
 @Controller
 public class JankenController {
@@ -24,6 +26,9 @@ public class JankenController {
   private UserMapper um;
   @Autowired
   private MatchMapper mm;
+
+  @Autowired
+  private MatchInfoMapper mim;
 
   @PostMapping("/janken")
   public String janken(@RequestParam String name, ModelMap model) {
@@ -58,11 +63,10 @@ public class JankenController {
 
   @GetMapping("/match")
   public String match(@RequestParam int id, Principal prin, ModelMap model) {
-    String player = prin.getName();
+    User player = this.um.selectByName(prin.getName());
     model.addAttribute("player", player);
     User opponent = this.um.selectById(id);
-    model.addAttribute("opponent", opponent.getName());
-    model.addAttribute("opponentId", id);
+    model.addAttribute("opponent", opponent);
 
     return "match.html";
   }
@@ -70,24 +74,32 @@ public class JankenController {
   @GetMapping("/fight")
   @Transactional
   public String fight(@RequestParam int id, @RequestParam String hand, Principal prin, ModelMap model) {
-    Janken janken = new Janken();
-    Map<String, String> outcome = janken.judge(hand);
+    // Janken janken = new Janken();
+    // Map<String, String> outcome = janken.judge(hand);
+    System.out.println("access to fight");
 
     User player = this.um.selectByName(prin.getName());
-    model.addAttribute("player", player.getName());
+    model.addAttribute("player", player);
     User opponent = this.um.selectById(id);
-    model.addAttribute("opponent", opponent.getName());
-    model.addAttribute("opponentId", id);
-    model.addAttribute("playerHand", outcome.get("playerHand"));
-    model.addAttribute("cpuHand", outcome.get("opponentHand"));
-    model.addAttribute("result", outcome.get("result"));
+    model.addAttribute("opponent", opponent);
+    System.out.println("add player and opponent");
+    // model.addAttribute("playerHand", outcome.get("playerHand"));
+    // model.addAttribute("cpuHand", outcome.get("opponentHand"));
+    // model.addAttribute("result", outcome.get("result"));
 
-    Match newMatch = new Match();
-    newMatch.setUser1(player.getId());
-    newMatch.setUser2(id);
-    newMatch.setUser1Hand(hand);
-    newMatch.setUser2Hand(outcome.get("opponentHand"));
-    this.mm.insertMatch(newMatch);
-    return "match.html";
+    MatchInfo newMatchInfo = new MatchInfo();
+    newMatchInfo.setUser1(player.getId());
+    newMatchInfo.setUser2(id);
+    newMatchInfo.setUser1Hand(hand);
+    newMatchInfo.setActive(true);
+    this.mim.insertMatchInfo(newMatchInfo);
+    System.out.println("insert match info");
+    // Match newMatch = new Match();
+    // newMatch.setUser1(player.getId());
+    // newMatch.setUser2(id);
+    // newMatch.setUser1Hand(hand);
+    // newMatch.setUser2Hand(outcome.get("opponentHand"));
+    // this.mm.insertMatch(newMatch);
+    return "wait.html";
   }
 }

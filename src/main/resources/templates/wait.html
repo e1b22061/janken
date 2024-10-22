@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>じゃんけん</title>
+</head>
+
+<body>
+  <a href="/logout">ログアウト</a>
+  <h1>相手の手を待ってます</h1>
+  <p>Hi, [[${player.name}]]</p>
+  <div th:if="${result}">
+    <h2>結果</h2>
+    <p>Match: id [[${match.id}]] user1: [[${player.id}]] user2: [[${opponent.id}]] user1Hand: [[${match.user1Hand}]]
+      user2Hand: [[${match.user2Hand}]] </p>
+  </div>
+  <!-- <a href="/janken">もどる</a> -->
+</body>
+
+</html>
