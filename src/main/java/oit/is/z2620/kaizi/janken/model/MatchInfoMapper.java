@@ -14,6 +14,6 @@ public interface MatchInfoMapper {
   @Select("SELECT * FROM matchinfo WHERE id = #{id}")
   MatchInfo selectMatchInfoById(int id);
 
-  @Select("SELECT * FROM matchinfo")
-  ArrayList<MatchInfo> selectAllMatchInfo();
+  @Select("SELECT * FROM matchinfo WHERE isActive = true")
+  ArrayList<MatchInfo> selectActiveMatchInfo();
 }
