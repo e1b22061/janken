@@ -55,10 +55,12 @@ public class JankenController {
     }
     ArrayList<User> users = this.um.selectAllUser();
     model.addAttribute("users", users);
+    ArrayList<MatchInfo> activeMatchInfos = this.mim.selectActiveMatchInfo();
+    model.addAttribute("active_matches", activeMatchInfos);
     ArrayList<Match> matches = this.mm.selectAllMatch();
     model.addAttribute("matches", matches);
 
-    return "janken.html"; // 結果を表示するページに遷移
+    return "janken.html";
   }
 
   @GetMapping("/match")
