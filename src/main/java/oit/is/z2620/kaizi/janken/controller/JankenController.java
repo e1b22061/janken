@@ -113,7 +113,7 @@ public class JankenController {
   public SseEmitter pushResult() {
     final SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
     try {
-      this.asynckekka.getResult(emitter);
+      this.asynckekka.pushResult(emitter);
     } catch (IOException e) {
       System.err.println(e);
       emitter.complete();
