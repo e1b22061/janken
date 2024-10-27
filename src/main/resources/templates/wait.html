@@ -11,10 +11,14 @@
       sse.onmessage = function (event) {
         console.log("sse.onmessage")
         console.log(event.data);
+        var result = JSON.parse(event.data);
         var div = document.getElementById('result');
+        var title = "<h2>結果</h2>";
+        var resultStr = "<p>id: " + result.id + " user1: " + result.user1 + " user2: " + result.user2 + " user1Hand: "
+          + result.user1Hand + " user2Hand: " + result.user2Hand + "</p>";
 
-        var kekka = "<h2>結果</h2><p>" + event.data + "</p><a href='/janken'>もどる</a>";
-        div.innerHTML = kekka;
+        var back = "<a href='/janken'>もどる</a>";
+        div.innerHTML = title + resultStr + back;
       };
     }
   </script>

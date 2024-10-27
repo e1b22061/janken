@@ -31,7 +31,7 @@ public class AsyncKekka {
   }
 
   @Async
-  public void getResult(SseEmitter emitter) throws IOException {
+  public void pushResult(SseEmitter emitter) throws IOException {
     try {
       while (true) {
         if (!dbUpdated) {
@@ -40,11 +40,11 @@ public class AsyncKekka {
         }
         ArrayList<Match> activeMatches = this.mm.selectActiveMatch();
         if (activeMatches.size() > 0) {
-          emitter.send(formatResult(activeMatches.get(0)));
+          emitter.send(activeMatches.get(0));
           TimeUnit.MILLISECONDS.sleep(1000);
           this.mm.updateMatch(activeMatches.get(0));
-          this.dbUpdated = false;
         }
+        this.dbUpdated = false;
       }
     } catch (Exception e) {
       logger.error("Exception:" + e.getClass().getName() + ":" + e.getMessage());
@@ -54,9 +54,4 @@ public class AsyncKekka {
     logger.info("asynckekka complete");
   }
 
-  private String formatResult(Match m) {
-    String result = "id: " + m.getId() + " user1: " + m.getUser1() + " user2: " + m.getUser2() + " user1Hand: "
-        + m.getUser1Hand() + " user2Hand: " + m.getUser2Hand() + " isActive: " + m.isActive();
-    return result;
-  }
 }
